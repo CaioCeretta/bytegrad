@@ -2,20 +2,20 @@ export const MAX_FREE_TODOS = 3;
 
 export const SENSITIVE_WORDS = ["password", "credit card"]
 
-export const initialToDos = [
+export const initialTodos = [
   {
     id: 1,
-    name: "good mood",
-    packed: true,
+    content: "good mood",
+    completed: true,
   },
   {
     id: 2,
-    name: "passport",
-    packed: false,
+    content: "passport",
+    completed: false,
   },
   {
     id: 3,
-    name: "phone charger",
-    packed: false,
+    content: "phone charger",
+    completed: false,
   },
 ];

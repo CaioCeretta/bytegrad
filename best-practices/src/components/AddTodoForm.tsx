@@ -1,12 +1,13 @@
 import { useState } from "react";
 import Button from "./Button";
-import { initialItems, initialToDos, initialToDos, MAX_FREE_TODOS, SENSITIVE_WORDS } from "../lib/constants";
+import {  initialTodos, MAX_FREE_TODOS, SENSITIVE_WORDS } from "../lib/constants";
+import { Todo } from "../lib/types";
 
 
 
 export default function AddTodoForm() {
 
-  const [todos, setTodos] = useState(initialToDos)
+  const [todos, setTodos] = useState<Todo[]>(initialTodos)
 
   return (
     <form
@@ -14,7 +15,7 @@ export default function AddTodoForm() {
         e.preventDefault();
 
         if(
-          SENSITIVE_WORDS.includes(todos)
+          SENSITIVE_WORDS.includes(todos[])
         ) {
           alert("Please do not use sensitive information")
           return;
@@ -24,7 +25,7 @@ export default function AddTodoForm() {
           ...prev,
           {
             id: prev.length + 1,
-            content: todoContent,
+            content: todos.content,
             completed: false
           }
         ])

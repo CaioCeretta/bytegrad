@@ -1,6 +1,6 @@
-# 17 Reacts Best Practices
 
-## Best Pratice No 1
+
+# 1st best practice: constants / hard-coded values
 
 The best practices number one is about hard coded values, so in the example we are going to make, let's take for example
 the add to do form, and let's say we have this component AddToForm, and we have a form, which will have an input of the todo
