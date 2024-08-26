@@ -1,4 +1,10 @@
-export default function Button({ onClick, buttonType, children }) {
+import { ReactNode } from "react";
+
+export default function Button({ onClick, buttonType, children }: {
+  onClick: () => void,
+  buttonType: string,
+  children: ReactNode
+}) {
   return (
     <button
       onClick={onClick}
