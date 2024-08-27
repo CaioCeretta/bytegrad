@@ -1,21 +1,19 @@
-import Select from "react-select";
-import EmptyView from "./EmptyView";
-import { useMemo, useState } from "react";
+import { useMemo, useState, useEffect } from "react";
+import Select, { SingleValue } from "react-select";
+import { TodoType } from "../lib/types";
 import { useItemsStore } from "../stores/itemsStore";
+import EmptyView from "./EmptyView";
+
+export interface TodoListProps {
+  item: TodoType,
+  onToggleItem: (id: number) => void;
+  onDeleteItem: (id: number) => void;
+}
 
 const sortingOptions = [
-  {
-    label: "Sort by default",
-    value: "default",
-  },
-  {
-    label: "Sort by packed",
-    value: "packed",
-  },
-  {
-    label: "Sort by unpacked",
-    value: "unpacked",
-  },
+  { label: "Sort by default", value: "default" },
+  { label: "Sort by completed", value: "completed" },
+  { label: "Sort by running", value: "running" }
 ];
 
 export default function TodosList() {
@@ -24,60 +22,68 @@ export default function TodosList() {
   const toggleItem = useItemsStore((state) => state.toggleItem);
   const [sortBy, setSortBy] = useState("default");
 
-  const sortedItems = useMemo(
-    () =>
-      [...items].sort((a, b) => {
-        if (sortBy === "packed") {
-          return b.packed - a.packed;
-        }
+  const sortedItems = useMemo(() => {
+    return [...items].sort((a: TodoType, b: TodoType) => {
+      if (sortBy === "completed") {
+        return a.completed === b.completed ? 0 : a.completed ? -1 : 1;
+      }
+      if (sortBy === "running") {
+        return a.completed === b.completed ? 0 : a.completed ? 1 : -1;
+      }
+      return 0;
+    });
+  }, [items, sortBy]);
 
-        if (sortBy === "unpacked") {
-          return a.packed - b.packed;
-        }
+  // Debugging: Check the current `sortBy` state
+  useEffect(() => {
+    console.log("Updated sortBy state:", sortBy);
+    
+  }, [sortBy]);
 
-        return;
-      }),
-    [items, sortBy]
-  );
+  console.log(sortedItems)
 
   return (
     <ul className="item-list">
       {items.length === 0 ? <EmptyView /> : null}
 
-      {items.length > 0 ? (
+      {items.length > 0 && (
         <section className="sorting">
           <Select
-            onChange={(option) => setSortBy(option.value)}
-            defaultValue={sortingOptions[0]}
+            onChange={(option: SingleValue<{ value: string; label: string }>) => {
+              console.log("Selected option:", option);
+              if (option) {
+                setSortBy(option.value);
+              }
+            }}
+            value={sortingOptions.find(option => option.value === sortBy)}
             options={sortingOptions}
           />
         </section>
-      ) : null}
+      )}
 
-      {sortedItems.map((item) => {
-        return (
-          <Item
-            key={item.id}
-            item={item}
-            onDeleteItem={deleteItem}
-            onToggleItem={toggleItem}
-          />
-        );
-      })}
+
+      {sortedItems.map((item) => (
+        <Todo
+          key={item.id}
+          item={item}
+          onDeleteItem={deleteItem}
+          onToggleItem={toggleItem}
+        />
+      ))}
     </ul>
   );
 }
 
-function Item({ item, onDeleteItem, onToggleItem }) {
+function Todo({ item, onDeleteItem, onToggleItem }: TodoListProps) {
   return (
     <li className="item">
       <label>
         <input
           onChange={() => onToggleItem(item.id)}
-          checked={item.packed}
+          checked={item.completed ? true : false}
           type="checkbox"
         />{" "}
-        {item.name}
+        {item.content}
       </label>
 
       <button onClick={() => onDeleteItem(item.id)}>❌</button>

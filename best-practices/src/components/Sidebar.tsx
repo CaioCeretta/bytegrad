@@ -1,17 +1,32 @@
 import { useItemsStore } from "../stores/itemsStore";
-import AddItemForm from "./AddItemForm";
+import AddTodoForm from "./AddTodoForm";
+import Button from "./Button";
 import ButtonGroup from "./ButtonGroup";
+
+
 
 export default function Sidebar() {
   const addItem = useItemsStore((state) => state.addItem);
 
-  console.log("Sidebar rendering...");
+  const isAuthenticated = true
+
 
   return (
     <div className="sidebar">
-      <AddItemForm onAddItem={addItem} />
+      <AddTodoForm onAddItem={addItem} />
 
-      <ButtonGroup />
+      { isAuthenticated ? (
+        <div style={{
+          marginTop: 'auto'
+        }}>
+          <Button buttonType="primary" onClick={() => {}} key={'log out'} text="Log out" />
+        </div>
+      ) : (
+        <ButtonGroup />
+      )
+    }
+
+      
     </div>
   );
 }

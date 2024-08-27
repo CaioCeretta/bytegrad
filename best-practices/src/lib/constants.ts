@@ -1,8 +1,10 @@
+import { TodoType } from "./types";
+
 export const MAX_FREE_TODOS = 3;
 
 export const SENSITIVE_WORDS = ["password", "credit card"]
 
-export const initialTodos = [
+export const initialTodos: TodoType[] = [
   {
     id: 1,
     content: "good mood",

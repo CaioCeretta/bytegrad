@@ -1,34 +1,46 @@
-import { useState } from "react";
+
+
+import { FormEvent, useRef, useState } from "react";
 import Button from "./Button";
-import {  initialTodos, MAX_FREE_TODOS, SENSITIVE_WORDS } from "../lib/constants";
-import { Todo } from "../lib/types";
+import { SENSITIVE_WORDS } from "../lib/constants";
 
+export default function AddTodoForm({ onAddItem }: {onAddItem: (content: string) => void}) {
+  const [todoContent, setTodoContent] = useState("");
+  const inputRef = useRef<HTMLInputElement | null>(null);
 
+  const handleSubmit = (e: FormEvent) => {
+    e.preventDefault();
 
-export default function AddTodoForm() {
+    if (
+      SENSITIVE_WORDS.includes(todoContent)
+    ) {
+      alert("Please do not use sensitive information")
+      return;
+    }
 
-  const [todos, setTodos] = useState<Todo[]>(initialTodos)
+    // basic validation
+    if (!todoContent) {
+      alert("Item can't be empty");
+      inputRef.current?.focus();
+      return;
+    }
+
+    onAddItem(todoContent);
+    setTodoContent("");
+  };
 
   return (
-    <form
-      onSubmit={(e) => {
-        e.preventDefault();
-
-        if(
-          SENSITIVE_WORDS.includes(todos[])
-        ) {
-          alert("Please do not use sensitive information")
-          return;
-        }
-
-        setTodos(prev => [
-          ...prev,
-          {
-            id: prev.length + 1,
-            content: todos.content,
-            completed: false
-          }
-        ])
-      }}
-  )
+    <form onSubmit={handleSubmit}>
+      <h2>Add an item</h2>
+      <input
+        ref={inputRef}
+        value={todoContent}
+        onChange={(e) => {
+          setTodoContent(e.target.value);
+        }}
+        autoFocus
+      />
+      <Button buttonType="submit">Add to list</Button>
+    </form>
+  );
 }
