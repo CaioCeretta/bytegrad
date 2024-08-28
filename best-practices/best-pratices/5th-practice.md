@@ -42,5 +42,13 @@ Then we will fix the problem, even though it is still not ideal, because there i
 ### Solution no2:
  
 We can modify our code, so the component will accept the className attribute, so in the h1 component we can also accept a
-className, and utilize the cn
+className, and utilize the cn utility function we create using clsx and tailwiond-merge, so we are going to receive the clases
+and prevent conflicts of classes happening, it would be something like
+
+<H1 className="mb-28"> and on the component it would be
+
+<h1 className={cn(className, 'text-lg font-bold text-red')}>
+
+
+like this, now we merge it with our base classes
 
