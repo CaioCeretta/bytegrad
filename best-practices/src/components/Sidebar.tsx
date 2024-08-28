@@ -31,7 +31,7 @@ export default function Sidebar() {
           // <ButtonGroup />
           <>
             <Button buttonType="primary" onClick={toggleLogIn} key={'log in'} text="Log in" />
-            <Button buttonType="primary" onClick={() => { }} key={'log out'} text="Register" />
+            <Button buttonType="primary" className="my-2" onClick={() => { }} key={'log out'} text="Register" />
           </>
         )
         }
