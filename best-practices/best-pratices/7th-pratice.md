@@ -1,0 +1,1 @@
+# 7th practice - Keep the components dumb
