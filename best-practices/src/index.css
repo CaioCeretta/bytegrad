@@ -35,13 +35,7 @@ body {
   color: #292218;
 }
 
-#root {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-}
+
 
 main {
   width: 972px;
