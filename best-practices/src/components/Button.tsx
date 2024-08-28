@@ -1,14 +1,15 @@
 import { ReactNode } from "react";
 import { cn } from "../lib/utils";
 
-export default function Button({ onClick, buttonType, className, children, text }: {
+interface ButtonProps {
   onClick?: () => void,
-  buttonType: string,
+  buttonType: "secondary" | "primary",
   children?: ReactNode,
   text?: string,
   className?: string
-  
-}) {
+}
+
+export default function Button({ onClick, buttonType, className, children, text }: ButtonProps) {
   return (
     <button
       onClick={onClick}
