@@ -1,8 +1,8 @@
 
 
 import { FormEvent, useRef, useState } from "react";
-import Button from "./Button";
 import { SENSITIVE_WORDS } from "../lib/constants";
+import Button from "./Button";
 
 export default function AddTodoForm({ onAddItem }: {onAddItem: (content: string) => void}) {
   const [todoContent, setTodoContent] = useState("");
@@ -40,7 +40,7 @@ export default function AddTodoForm({ onAddItem }: {onAddItem: (content: string)
         }}
         autoFocus
       />
-      <Button buttonType="submit">Add to list</Button>
+      <Button type="submit">Add to list</Button>
     </form>
   );
 }
