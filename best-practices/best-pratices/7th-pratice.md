@@ -164,4 +164,7 @@ approach is that the app component will blow up, since pratically all components
 harder for us to see what's going on. Children partner may sometimes be ok for us. One other good thing for this pattern
 is that, for example, if we have 3 components inside of it, and we need to rerender the sidebar component, it will not cause
 a rerender for the components inside of it.
-One other option is by using the context api to deal with the states
+One other option is by using the context api to deal with the states, and one more thing, we also may prefer the functional
+way of dealing with the state updates, like setTodos(prev => [...prev, todo])
+
+this way we keep the integrity of the data utilizing the previous state, and add a new one
