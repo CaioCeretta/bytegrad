@@ -1,5 +1,8 @@
-import { useItemsStore } from "../stores/itemsStore";
+import { useState } from "react";
+import { TodoType } from "../lib/types";
+import AddTodoForm from "./AddTodoForm";
 import BackgroundHeading from "./BackgroundHeading";
+import Button from "./Button";
 import Footer from "./Footer";
 import Header from "./Header";
 import Sidebar from "./Sidebar";
@@ -7,13 +10,18 @@ import StatusBar from "./StatusBar";
 import TodosList from "./TodosList";
 
 function App() {
-  const todos = useItemsStore((state) => state.items);
+  const [todos, setTodos] = useState<TodoType[]>([]);
 
   const todosCompletedPercentage = todos.length
     ? (todos.filter((todo) => todo.completed).length / todos.length) * 100
     : 0; // Ensure no division by zero
 
-  console.log(todosCompletedPercentage)
+  const addTodo = (content: string) => {
+    setTodos((prevTodos) => [
+      ...prevTodos,
+      { id: (prevTodos.length), content, completed: false },
+    ]);
+  };
 
   return (
     <>
@@ -26,7 +34,14 @@ function App() {
       bg-[#fff] rounded-[8px] overflow-hidden grid grid-cols-[7fr_4fr] grid-rows-[59px_1fr]">
           <Header />
           <TodosList />
-          <Sidebar />
+          <Sidebar>
+            <AddTodoForm addTodo={addTodo} />
+
+            <div className="space-y-2">
+              <Button type="button" buttonType="primary" className="my-2" onClick={() => { }} key={'log out'} text="Register" />
+            </div>
+
+          </Sidebar>
         </main>
 
         <Footer />

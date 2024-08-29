@@ -1,8 +1,8 @@
 
 
 import { FormEvent, useRef, useState } from "react";
-import { SENSITIVE_WORDS } from "../lib/constants";
 import Button from "./Button";
+import { SENSITIVE_WORDS } from "../lib/constants";
 
 export default function AddTodoForm({ onAddItem }: {onAddItem: (content: string) => void}) {
   const [todoContent, setTodoContent] = useState("");
