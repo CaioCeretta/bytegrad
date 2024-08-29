@@ -1,5 +1,7 @@
 # 7th practice - Keep the components dumb
 
+## Example 1
+
 So essentially, what this means is for us to keep the components simple. Let's say that in our case we have a status bar
 at the top, and we have the todo
 
@@ -109,12 +111,57 @@ then on the app component we would do it like
 
 <StatusBar progressPercentage={todosCompletedPercentage} />
 
+Now this component is "dumber", not an insult or anything, it's just not as complicated as before, because if we have a
+very complicated thing it is usually very specific for a use case.
+
+So don't forget
+
+### Keep your components dumb they are not unnecessarily complicated they are simple as they can be, and it will improve
+their reusability
+
+And if we have on top the todos state, and use the calculation with that state, it is essentially being derived from some
+exsting state that we already have. People call that derived state, tipically what we wanna derive is vert close from where
+we actually have the original state, instead of somewhere down our component tree, we want to do very close to where the
+actual state is, something like
+
+  const [todos, setTodos] = useState([]);
+
+  const todosCompletedPercentage = todos.length
+    ? (todos.filter((todo) => todo.completed).length / todos.length) * 100
+    : 0; // Ensure no division by zero
 
 
+## Example 2 - Children Pattern
 
-where progressPercentage is going to be a prop received, then  if i want to use it somewhere else, for example. in a loading indicator
+There are other situations where we are managing the state and when i submit the form, i want to add it to the array of todos
+so me may think of setting the todos somewhere in the form, and that form is sitting on the sidebar component
 
+So in this example we are not using the store for the todos, but we are creating that todos state inside the app, and on the
+sidebar creation, we are passing the setTodo state to it, but it would be a prop drilling in this case, so to get that
+setter function, all the way from where we are managing the state, all the way down from the component tree to the component
+that actually needs it, we have to go from one in between the component, which is the sidebar, it stands in the middle of
+the app and the todoform, so the sole purpose of the settodos sidebarprops, is to pass it down, and this is not ideal,
+because for making this component more complicated that it needs to be, because it will need a chain, from app to the sidebar
+to de the addtodoform, and for us to add a new component in between them we have to make sure that we also pass the setter to that
+and if we don't, we break the chain, and it will become more like a fragile set up, so we are, in this case, unnecessary
+making this component more complicated than it should be.
+We can prevent prop drilling in several ways, so people will always opt to use other solutions for state managenement, such
+as contexts,redux, stores, etc...
+One easier way for smaller cases, its just we remove that setTodos from the sidebar, not self close the component, and inside
+of it, take the whole code from the sidebar, and place it inside of it, as children.
 
+<Sidebar>
+  <AddTodoForm addTodo={addTodo} />
 
+  <div className="space-y-2">
+    <Button type="button" buttonType="primary" className="my-2" onClick={() => { }} key={'log out'} text="Register" />
+  </div>
 
+</Sidebar>
 
+this is another option to prevent the prop drilling effect, and it may be nice for smaller apps, and one down side of this
+approach is that the app component will blow up, since pratically all components are going to be inside of it and it may be
+harder for us to see what's going on. Children partner may sometimes be ok for us. One other good thing for this pattern
+is that, for example, if we have 3 components inside of it, and we need to rerender the sidebar component, it will not cause
+a rerender for the components inside of it.
+One other option is by using the context api to deal with the states
