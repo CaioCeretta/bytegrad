@@ -180,4 +180,4 @@ we call the Component, inside the opening and closing we have the jsx. Inside of
 update the app state todos, and what we would first think is about passing down the state setter as props, it will work,
 but it will make the component unnecessarily complicated, we don't actually need the todos there, because in the react useState
 there is another way of updating states, which is with a function, if we are receiving the setTodos, and using it, we are
-going to be able to access the current state value
+going to be able to access the current state value.
