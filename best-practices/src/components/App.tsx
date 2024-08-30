@@ -32,6 +32,19 @@ function App() {
     )
   }
 
+  const handleAddTodo = (todoContent: string) => {
+    // basic validation
+    if (!todoContent) {
+      alert("Item can't be empty");
+      return;
+    }
+
+    setTodos(prevTodos => [
+      ...prevTodos,
+      { id: prevTodos.length + 1, content: todoContent, completed: false }
+    ]);
+  };
+
 
   return (
     <>
@@ -44,8 +57,8 @@ function App() {
       bg-[#fff] rounded-[8px] overflow-hidden grid grid-cols-[7fr_4fr] grid-rows-[59px_1fr]">
           <Header />
           <TodosList onDeleteTodo={handleDeleteTodo} onToggleTodo={handleToggleTodo} todos={todos} />
-          <Sidebar>
-            <AddTodoForm setTodos={setTodos} />
+          <Sidebar >
+            <AddTodoForm handleAddTodo={handleAddTodo} />
 
             <div className="space-y-2">
               <Button type="button" buttonType="primary" className="my-2" onClick={() => { }} key={'log out'} text="Register" />

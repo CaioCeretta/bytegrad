@@ -1,35 +1,28 @@
 
 
-import { FormEvent, SetStateAction, useState } from "react";
-import { TodoType } from "../lib/types";
+import { FormEvent, useState } from "react";
 import Button from "./Button";
 
 interface addToDoProps {
-  setTodos: React.Dispatch<SetStateAction<TodoType[]>>;
+  // setTodos: React.Dispatch<SetStateAction<TodoType[]>>;
+  handleAddTodo: (content: string) => void;
 }
 
-export default function AddTodoForm({ setTodos }: addToDoProps) {
+export default function AddTodoForm({ handleAddTodo }: addToDoProps) {
   const [todoContent, setTodoContent] = useState("");
 
-    const handleAddTodo = () => {
-    // basic validation
-    if (!todoContent) {
-      alert("Item can't be empty");
-      return;
-    }
-
-    setTodos(prevTodos => [
-      ...prevTodos,
-      {id: prevTodos.length + 1, content: todoContent, completed: false}
-    ]);
-    setTodoContent(""); 
-  };
-  
 
   function handleSubmit(e: FormEvent) {
     e.preventDefault();
 
-    handleAddTodo()
+    // update state
+    handleAddTodo(todoContent)
+
+    // if(todos.length > 10) {
+    // setModalCOntent(`You have now added ${todos.length}, please upgrade your plan to pro to add more`)
+
+    // setIsModalOpen(true)
+    // }
   
   }
 
