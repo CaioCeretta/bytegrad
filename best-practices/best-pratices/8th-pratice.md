@@ -16,4 +16,30 @@ if(todos.length === 10) {
 }
 
 so very often we want to do multiple things and have different logics in the same place, so let's say we have a function
-before that
+before that, so we would end up doing something like
+
+    if(todos.length > 10) {
+    setModalCOntent(`You have now added ${todos.length}, please upgrade your plan to pro to add more`)
+
+    setIsModalOpen(true)
+    }
+
+the first problem here is that we need access to the todo variables, we got it in the last case by using the previous
+value from the setter, and it would become very complex, because we would also need access to the setter function and also
+we also we need access to the setter of the modal, and this component suddenly is going to become more complex, because
+now we need to pass a todos variable and also an additional setter function.
+
+Tipically we don't want to pass raw setter functions if there isn't an event happening on that component, and we wanna do
+something on it, so we may want to create handler that encompasses all the things we want to do.
+
+So one good options to it, is create different handlers that are going to handle different logics, so we would create a 
+handleAddTodo, which will add a todo, and simply on the onSubmit, call that function.
+
+What we are doing in this practice, is that on the app, where we have access to the todos, we are defining that handleAddTodo
+and passing it as props to the addtodoform, and that addtodoform, is going to call the function it received as a prop on
+the submit, which will make the addtoform, a dumber component and it is much more easy to analyze, so in order to do
+this, the only thing the addToForm does, is call that function passing that todoContent as an argument, then, on the app
+we have the handleAttToDo, which has the parameter of the content, and it will work as usual
+
+
+  
