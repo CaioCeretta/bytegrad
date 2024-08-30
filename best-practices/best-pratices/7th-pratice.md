@@ -167,4 +167,17 @@ a rerender for the components inside of it.
 One other option is by using the context api to deal with the states, and one more thing, we also may prefer the functional
 way of dealing with the state updates, like setTodos(prev => [...prev, todo])
 
-this way we keep the integrity of the data utilizing the previous state, and add a new one
+this way we keep the integrity of the data utilizing the previous state, and add a new one of handleAddTodo, then we are going
+to migrate the functionality of the handleSubmit, of adding a todo, to this function
+
+because this component does not need to know anything about modals, we want to keep this components dumb, they shouldn't know
+about all sorts of different things.
+
+So basically, to finish this topic
+
+Let's say we have the sidebar component, which is like the way above, on the component the content is just children, and when
+we call the Component, inside the opening and closing we have the jsx. Inside of it we have the AddToDOForm, which will
+update the app state todos, and what we would first think is about passing down the state setter as props, it will work,
+but it will make the component unnecessarily complicated, we don't actually need the todos there, because in the react useState
+there is another way of updating states, which is with a function, if we are receiving the setTodos, and using it, we are
+going to be able to access the current state value

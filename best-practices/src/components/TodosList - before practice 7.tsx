@@ -37,7 +37,7 @@ export default function TodosList() {
   // Debugging: Check the current `sortBy` state
   useEffect(() => {
     console.log("Updated sortBy state:", sortBy);
-    
+
   }, [sortBy]);
 
   console.log(sortedItems)

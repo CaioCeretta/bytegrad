@@ -16,12 +16,22 @@ function App() {
     ? (todos.filter((todo) => todo.completed).length / todos.length) * 100
     : 0; // Ensure no division by zero
 
-  const addTodo = (content: string) => {
-    setTodos((prevTodos) => [
-      ...prevTodos,
-      { id: (prevTodos.length), content, completed: false },
-    ]);
-  };
+  const handleToggleTodo = (id: number) => {
+    setTodos(prevTodos =>
+      prevTodos.map(todo =>
+        todo.id === id ? { ...todo, completed: !todo.completed } : todo
+      )
+    )
+  }
+
+
+
+  const handleDeleteTodo = (id: number) => {
+    setTodos(prevTodos =>
+      prevTodos.filter(todo => todo.id !== id)
+    )
+  }
+
 
   return (
     <>
@@ -33,9 +43,9 @@ function App() {
         <main className="relative w-[971px] shadow-[0_4px_4px_rgb(0, 0, 0, 0.08)] h-[636px]
       bg-[#fff] rounded-[8px] overflow-hidden grid grid-cols-[7fr_4fr] grid-rows-[59px_1fr]">
           <Header />
-          <TodosList />
+          <TodosList onDeleteTodo={handleDeleteTodo} onToggleTodo={handleToggleTodo} todos={todos} />
           <Sidebar>
-            <AddTodoForm addTodo={addTodo} />
+            <AddTodoForm setTodos={setTodos} />
 
             <div className="space-y-2">
               <Button type="button" buttonType="primary" className="my-2" onClick={() => { }} key={'log out'} text="Register" />

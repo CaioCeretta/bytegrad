@@ -1,39 +1,42 @@
 
 
-import { FormEvent, useRef, useState } from "react";
+import { FormEvent, SetStateAction, useState } from "react";
+import { TodoType } from "../lib/types";
 import Button from "./Button";
-import { SENSITIVE_WORDS } from "../lib/constants";
 
-export default function AddTodoForm({ onAddItem }: {onAddItem: (content: string) => void}) {
+interface addToDoProps {
+  setTodos: React.Dispatch<SetStateAction<TodoType[]>>;
+}
+
+export default function AddTodoForm({ setTodos }: addToDoProps) {
   const [todoContent, setTodoContent] = useState("");
-  const inputRef = useRef<HTMLInputElement | null>(null);
 
-  const handleSubmit = (e: FormEvent) => {
-    e.preventDefault();
-
-    if (
-      SENSITIVE_WORDS.includes(todoContent)
-    ) {
-      alert("Please do not use sensitive information")
-      return;
-    }
-
+    const handleAddTodo = () => {
     // basic validation
     if (!todoContent) {
       alert("Item can't be empty");
-      inputRef.current?.focus();
       return;
     }
 
-    onAddItem(todoContent);
-    setTodoContent("");
+    setTodos(prevTodos => [
+      ...prevTodos,
+      {id: prevTodos.length + 1, content: todoContent, completed: false}
+    ]);
+    setTodoContent(""); 
   };
+  
+
+  function handleSubmit(e: FormEvent) {
+    e.preventDefault();
+
+    handleAddTodo()
+  
+  }
 
   return (
     <form onSubmit={handleSubmit}>
       <h2>Add an item</h2>
       <input
-        ref={inputRef}
         value={todoContent}
         onChange={(e) => {
           setTodoContent(e.target.value);
