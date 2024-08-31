@@ -8,6 +8,7 @@ import Header from "./Header";
 import Sidebar from "./Sidebar";
 import StatusBar from "./StatusBar";
 import TodosList from "./TodosList";
+import { KindeProvider } from "@kinde-oss/kinde-auth-react";
 
 function App() {
   const [todos, setTodos] = useState<TodoType[]>([]);
@@ -48,24 +49,31 @@ function App() {
 
   return (
     <>
+
       <div className="relative bg-[#f1d4b3] min-h-screen flex justify-center items-center flex-col">
         <StatusBar progressPercentage={todosCompletedPercentage} />
 
         <BackgroundHeading />
-
-        <main className="relative w-[971px] shadow-[0_4px_4px_rgb(0, 0, 0, 0.08)] h-[636px]
+        <KindeProvider
+          domain={process.env.REACT_APP_KINDE_DOMAIN || ''}
+          clientId={process.env.REACT_APP_KINDE_CLIENT_ID || ''}
+          redirectUri={process.env.REACT_APP_KINDE_REDIRECT_URI || ''}
+        >
+          <main className="relative w-[971px] shadow-[0_4px_4px_rgb(0, 0, 0, 0.08)] h-[636px]
       bg-[#fff] rounded-[8px] overflow-hidden grid grid-cols-[7fr_4fr] grid-rows-[59px_1fr]">
-          <Header />
-          <TodosList onDeleteTodo={handleDeleteTodo} onToggleTodo={handleToggleTodo} todos={todos} />
-          <Sidebar >
-            <AddTodoForm handleAddTodo={handleAddTodo} />
+            <Header />
+            <TodosList onDeleteTodo={handleDeleteTodo} onToggleTodo={handleToggleTodo} todos={todos} />
+            <Sidebar >
+              <AddTodoForm handleAddTodo={handleAddTodo} />
 
-            <div className="space-y-2">
-              <Button type="button" buttonType="primary" className="my-2" onClick={() => { }} key={'log out'} text="Register" />
-            </div>
+              <div className="space-y-2">
+                <Button type="button" buttonType="secondary" className="my-2" onClick={() => { }} key={'register'} text="Register" />
+                <Button type="button" buttonType="secondary" className="my-2" onClick={() => { }} key={'login'} text="Log In" />
+              </div>
 
-          </Sidebar>
-        </main>
+            </Sidebar>
+          </main>
+        </KindeProvider>
 
         <Footer />
       </div>
