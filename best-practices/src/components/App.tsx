@@ -1,3 +1,4 @@
+import { useKindeAuth } from "@kinde-oss/kinde-auth-react";
 import { useState } from "react";
 import { TodoType } from "../lib/types";
 import AddTodoForm from "./AddTodoForm";
@@ -8,9 +9,14 @@ import Header from "./Header";
 import Sidebar from "./Sidebar";
 import StatusBar from "./StatusBar";
 import TodosList from "./TodosList";
-import { KindeProvider } from "@kinde-oss/kinde-auth-react";
+
+
 
 function App() {
+
+  const { login, register, user } = useKindeAuth();
+
+
   const [todos, setTodos] = useState<TodoType[]>([]);
 
   const todosCompletedPercentage = todos.length
@@ -50,15 +56,11 @@ function App() {
   return (
     <>
 
-      <div className="relative bg-[#f1d4b3] min-h-screen flex justify-center items-center flex-col">
-        <StatusBar progressPercentage={todosCompletedPercentage} />
+        <div className="relative bg-[#f1d4b3] min-h-screen flex justify-center items-center flex-col">
+          <StatusBar progressPercentage={todosCompletedPercentage} />
 
-        <BackgroundHeading />
-        <KindeProvider
-          domain={process.env.REACT_APP_KINDE_DOMAIN || ''}
-          clientId={process.env.REACT_APP_KINDE_CLIENT_ID || ''}
-          redirectUri={process.env.REACT_APP_KINDE_REDIRECT_URI || ''}
-        >
+          <BackgroundHeading />
+
           <main className="relative w-[971px] shadow-[0_4px_4px_rgb(0, 0, 0, 0.08)] h-[636px]
       bg-[#fff] rounded-[8px] overflow-hidden grid grid-cols-[7fr_4fr] grid-rows-[59px_1fr]">
             <Header />
@@ -67,16 +69,17 @@ function App() {
               <AddTodoForm handleAddTodo={handleAddTodo} />
 
               <div className="space-y-2">
-                <Button type="button" buttonType="secondary" className="my-2" onClick={() => { }} key={'register'} text="Register" />
-                <Button type="button" buttonType="secondary" className="my-2" onClick={() => { }} key={'login'} text="Log In" />
+                {user?.email}
+
+                <Button type="button" buttonType="secondary" className="my-2" onClick={() => register()} key={'register'} text="Register" />
+                <Button type="button" buttonType="secondary" className="my-2" onClick={() => login()} key={'login'} text="Log In" />
               </div>
 
             </Sidebar>
           </main>
-        </KindeProvider>
 
-        <Footer />
-      </div>
+          <Footer />
+        </div>
     </>
   )
 }

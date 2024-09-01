@@ -11,6 +11,7 @@ interface ButtonProps {
 }
 
 export default function Button({ onClick, buttonType, className, children, text, type }: ButtonProps) {
+
   return (
     <button
       type={type}
