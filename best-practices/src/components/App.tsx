@@ -13,11 +13,11 @@ import TodosList from "./TodosList";
 
 
 function App() {
+  const [todos, setTodos] = useState<TodoType[]>([]);
 
   const { login, register, user } = useKindeAuth();
 
 
-  const [todos, setTodos] = useState<TodoType[]>([]);
 
   const todosCompletedPercentage = todos.length
     ? (todos.filter((todo) => todo.completed).length / todos.length) * 100
