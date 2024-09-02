@@ -1,14 +1,14 @@
 
 
-import { FormEvent, useState } from "react";
+import { FormEvent, memo, useState } from "react";
 import Button from "./Button";
 
 interface addToDoProps {
   // setTodos: React.Dispatch<SetStateAction<TodoType[]>>;
-  handleAddTodo: (content: string) => void;
+  onAddTodo: (content: string) => void;
 }
 
-export default function AddTodoForm({ handleAddTodo }: addToDoProps) {
+const AddTodoForm = memo(({ onAddTodo }: addToDoProps) => {
   const [todoContent, setTodoContent] = useState("");
 
 
@@ -16,7 +16,7 @@ export default function AddTodoForm({ handleAddTodo }: addToDoProps) {
     e.preventDefault();
 
     // update state
-    handleAddTodo(todoContent)
+    onAddTodo(todoContent)
 
     // if(todos.length > 10) {
     // setModalCOntent(`You have now added ${todos.length}, please upgrade your plan to pro to add more`)
@@ -39,4 +39,6 @@ export default function AddTodoForm({ handleAddTodo }: addToDoProps) {
       <Button type="submit">Add to list</Button>
     </form>
   );
-}
+})
+
+export default AddTodoForm;

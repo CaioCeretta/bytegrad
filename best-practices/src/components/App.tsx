@@ -1,5 +1,5 @@
 import { useKindeAuth } from "@kinde-oss/kinde-auth-react";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { TodoType } from "../lib/types";
 import AddTodoForm from "./AddTodoForm";
 import BackgroundHeading from "./BackgroundHeading";
@@ -23,6 +23,7 @@ function App() {
     ? (todos.filter((todo) => todo.completed).length / todos.length) * 100
     : 0; // Ensure no division by zero
 
+  
   const handleToggleTodo = (id: number) => {
     setTodos(prevTodos =>
       prevTodos.map(todo =>
@@ -39,7 +40,7 @@ function App() {
     )
   }
 
-  const handleAddTodo = (todoContent: string) => {
+  const handleAddTodo = useCallback((todoContent: string) => {
     // basic validation
     if (!todoContent) {
       alert("Item can't be empty");
@@ -50,7 +51,8 @@ function App() {
       ...prevTodos,
       { id: prevTodos.length + 1, content: todoContent, completed: false }
     ]);
-  };
+  }, []);
+
 
 
   return (
@@ -66,7 +68,7 @@ function App() {
             <Header />
             <TodosList onDeleteTodo={handleDeleteTodo} onToggleTodo={handleToggleTodo} todos={todos} />
             <Sidebar >
-              <AddTodoForm handleAddTodo={handleAddTodo} />
+              <AddTodoForm onAddTodo={handleAddTodo} />
 
               <div className="space-y-2">
                 {user?.email}
