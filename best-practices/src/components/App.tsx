@@ -13,7 +13,23 @@ import TodosList from "./TodosList";
 
 
 function App() {
-  const [todos, setTodos] = useState<TodoType[]>([]);
+  const [todos, setTodos] = useState<TodoType[]>([
+    {
+      id: 1,
+      content: 'Learn React',
+      completed: false
+    },
+    {
+      id: 2,
+      content: 'Learn TypeScript',
+      completed: false
+    },
+    {
+      id: 3,
+      content: 'Build a project',
+      completed: false
+    }
+  ]);
 
   const { login, register, user } = useKindeAuth();
 
