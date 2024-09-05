@@ -1,5 +1,6 @@
 import { useKindeAuth } from "@kinde-oss/kinde-auth-react";
 import { useCallback, useEffect, useState } from "react";
+import { v4 as uuid } from 'uuid';
 import { TodoType } from "../lib/types";
 import AddTodoForm from "./AddTodoForm";
 import BackgroundHeading from "./BackgroundHeading";
@@ -38,7 +39,7 @@ function App() {
     : 0; // Ensure no division by zero
 
 
-  const handleToggleTodo = (id: number) => {
+  const handleToggleTodo = (id: string) => {
     setTodos(prevTodos =>
       prevTodos.map(todo =>
         todo.id === id ? { ...todo, completed: !todo.completed } : todo
@@ -48,7 +49,7 @@ function App() {
 
 
 
-  const handleDeleteTodo = (id: number) => {
+  const handleDeleteTodo = (id: string) => {
     setTodos(prevTodos =>
       prevTodos.filter(todo => todo.id !== id)
     )
@@ -63,7 +64,7 @@ function App() {
 
     setTodos(prevTodos => [
       ...prevTodos,
-      { id: prevTodos.length + 1, content: todoContent, completed: false }
+      { id: uuid(), content: todoContent, completed: false }
     ]);
   }, []);
 
