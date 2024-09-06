@@ -1,4 +1,7 @@
-import { useState } from "react"
+'use client'
+
+import MaxWidthWrapper from "@/components/MaxWidthWrapper";
+import { useState } from "react";
 
 export default function StateUpdatesImmediately() {
 
@@ -17,7 +20,7 @@ export default function StateUpdatesImmediately() {
 
 
   return (
-    <div className="w-full">
+    <MaxWidthWrapper>
       <button
       onClick={handleClick}
       className="bg-blue-500 px-4 py-2 text-white rounded mb-4"
@@ -26,6 +29,6 @@ export default function StateUpdatesImmediately() {
       </button>
 
       <p>Count is: {count}</p>
-    </div>
+    </MaxWidthWrapper>
   )
 }

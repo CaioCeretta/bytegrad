@@ -1,3 +1,5 @@
+'use client'
+
 import React, { useEffect, useState } from 'react'
 
 export default function ConditionalRendering({ id }: {id: number}) {
@@ -8,7 +10,7 @@ export default function ConditionalRendering({ id }: {id: number}) {
   const [something, setSomething] = useState('blabla')
 
   useEffect(() => {
-
+    
   }, [something])
 
 
