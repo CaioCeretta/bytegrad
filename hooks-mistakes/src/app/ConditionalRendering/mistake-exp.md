@@ -1,4 +1,4 @@
-# Conditional Rendering
+# useEffect / useState "Mistake" nº 2 - Conditional Rendering
 
 Let's use a component that receives an id in this example
 

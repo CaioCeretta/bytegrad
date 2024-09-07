@@ -1,4 +1,4 @@
-# useState / useEffect mistake 4: Object state instead of multiple smaller ones
+# useState / useEffect "Mistake" nº 4: Object state instead of multiple smaller ones
 
 We are going to use a form as an example, here the form will have 6 inputs, but it could have several ones more.
 

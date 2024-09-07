@@ -1,4 +1,4 @@
-# useState / useEffect mistake 1: State updates aren't immediate,
+# useState / useEffect "Mistake" nº 1: State updates aren't immediate,
 
 If for example, on the button click, we call the handleClick function, which will increment the count state by 1, but if
 on the same handleClick, we copy several times this setCount(count + 1) the value is still going to be 1, no matter how

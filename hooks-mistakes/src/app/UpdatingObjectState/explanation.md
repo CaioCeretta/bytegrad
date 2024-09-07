@@ -1,4 +1,4 @@
-# useState / useEffect mistake 3: Updating object state
+# useState / useEffect "Mistake" nº 3: Updating object state
 
 Let's say we have this state
 

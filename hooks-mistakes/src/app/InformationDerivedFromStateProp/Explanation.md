@@ -1,4 +1,4 @@
-# useState / useEffect mistake 5 - Information can be derived from state / props
+# useState / useEffect "Mistake" nº 5 - Information can be derived from state / props
 
 Let's say we have some kind of cart and the cart keeps track of the quantity, and everytime we click on the button, it
 calls the function handleClick which will increase the quantity by one, then on for storing the total, a beginner would
