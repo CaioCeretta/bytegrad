@@ -11,6 +11,7 @@ export default function Home() {
           <li className="mb-2"><Link href={`ConditionalRendering`}>Conditional Rendering</Link></li>
           <li className="mb-2"><Link href={`UpdatingObjectState`}>Updating Object State</Link></li>
           <li className="mb-2"><Link href={`ObjectStateInsteadMultiple`}>Object State Instead Multiple</Link></li>
+          <li className="mb-2"><Link href={`InformationDerivedFromStateProp`}>Information Derived From State / Prop</Link></li>
         </ol>
 
       </main>
