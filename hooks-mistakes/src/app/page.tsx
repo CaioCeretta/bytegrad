@@ -1,3 +1,5 @@
+'use client'
+
 import MaxWidthWrapper from "@/components/MaxWidthWrapper";
 import Link from "next/link";
 
@@ -12,6 +14,7 @@ export default function Home() {
           <li className="mb-2"><Link href={`UpdatingObjectState`}>Updating Object State</Link></li>
           <li className="mb-2"><Link href={`ObjectStateInsteadMultiple`}>Object State Instead Multiple</Link></li>
           <li className="mb-2"><Link href={`InformationDerivedFromStateProp`}>Information Derived From State / Prop</Link></li>
+          <li className="mb-2"><Link href={`Primitives`}>Primites vs Non Primitives</Link></li>
         </ol>
 
       </main>
