@@ -48,9 +48,54 @@ component mounts and will not change on re-renders
 
 if we want the object to update based on certain state or props, we can include them on the dependency array, like
 
-const memoizedPrice = useMemo(() => ({nunber, totalPrice}), [number, totalPrice])
+const memoizedPrice = useMemo(() => ({number, totalPrice}), [number, totalPrice])
 
 In this case, the object will only be recreated if number or totalPrice changes, ensuring the object reference stays stable
 unless one of the dependencies change
+
+## Hard coded values on the memoized array explanation
+
+If we utilize in the memo callback,  useMemo(() => ({ number: 100, totalPrice: true }), [number, totalPrice]);, by
+including number and totalPrice in the dependency array, it might be a bit confusing
+
+- Using hardcoded values with useMemo
+
+  When use hardcoded (constants) values inde the useMemo callback like so
+
+  const memoizedObject = useMemo(() => ({ number: 100, totalPrice: true }), [number, totalPrice]);
+
+  Including number and totalPrice in the dependency array doesn't have any effect unless these are variables in our component
+  scope that can change. if number and totalPrice are not variables but constants, as in this example, we should use an empty
+  dependency array
+
+  const memoizedObject = useMemo(() => ({ number: 100, totalPrice: true }), []);
+
+  This ensures that the object is only created once, and its reference remains stable across re-renders.
+
+- When to include variables in the dependency array
+
+  1. They are variables in our component's scope: that is, they're state or props that can change over time
+  2. They are used inside the useMemo callback. The memoized value depends on these variables
+
+  For example, if number and totalPrice are state variables or props:
+
+  const memoizedObject = useMemo(() => ({number, totalPrice}), [number, totalPrice])
+
+  In the case above, the object { number, totalPrice } will be re-created whenever one of these variables change and including
+  them in the array ensures that the memoization updates correctly when these values change.
+
+So to avoid confusion, we should, if using constants, to use an empty dependency array and if we are using variables to
+include them both in the useMemo callback and the dependency array
+
+Example: 
+
+const [number, setNumber] = useState(100);
+const [totalPrice, setTotalPrice] = useState(true);
+
+and if we want the memoized value to use these vale
+
+const memoizedObject = useMemo(() => ({ number, totalPrice }), [number, totalPrice]);
+
+
 
 
