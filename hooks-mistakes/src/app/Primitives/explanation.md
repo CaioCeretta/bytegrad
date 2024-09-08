@@ -92,7 +92,7 @@ Example:
 const [number, setNumber] = useState(100);
 const [totalPrice, setTotalPrice] = useState(true);
 
-and if we want the memoized value to use these vale
+and if we want the memoized value to use these values
 
 const memoizedObject = useMemo(() => ({ number, totalPrice }), [number, totalPrice]);
 
