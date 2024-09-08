@@ -38,6 +38,19 @@ as a dependency, we need to be careful, because everytime we update it, this obj
 so tipically we don't want to depend on an object but a primitive value, or we can depend on a object property, such as
 price.number which will be now a primitive and prevent this useEffect from unnecessarilly running
 
-  
+
+There is one way we can still use the object as a dependency and still don't cause rerenders, which is useMemo
+if we do something like
+
+const memoizedPrice = useMemo(() => {number: 100, totalPrice: true}, [])
+by doing this the object is memoized with a dependency array of [] that ensures the object is only created once when the
+component mounts and will not change on re-renders
+
+if we want the object to update based on certain state or props, we can include them on the dependency array, like
+
+const memoizedPrice = useMemo(() => ({nunber, totalPrice}), [number, totalPrice])
+
+In this case, the object will only be recreated if number or totalPrice changes, ensuring the object reference stays stable
+unless one of the dependencies change
 
 
