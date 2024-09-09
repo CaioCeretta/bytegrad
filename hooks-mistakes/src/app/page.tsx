@@ -16,6 +16,7 @@ export default function Home() {
           <li className="mb-2"><Link href={`InformationDerivedFromStateProp`}>Information Derived From State / Prop</Link></li>
           <li className="mb-2"><Link href={`Primitives`}>Primites vs Non Primitives</Link></li>
           <li className="mb-2"><Link href={`StateInitializing`}>State Initializing W/ Object</Link></li>
+          <li className="mb-2"><Link href={`TypescriptMistake`}>Typescript &quot;Mistake&quot;</Link></li>
 
         </ol>
 

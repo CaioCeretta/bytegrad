@@ -60,8 +60,5 @@ return (
     )
   )
 
-This would also work, by checking if there is a post. We must not forget to type the state object because otherwise the code
-will show a red squigly line on the property, so it would be good, if we know what properties a post has to add something like
-
-useState<{title: string, body: string}>() 
+This would also work, by checking if there is a post. 
 
