@@ -17,6 +17,7 @@ export default function Home() {
           <li className="mb-2"><Link href={`Primitives`}>Primites vs Non Primitives</Link></li>
           <li className="mb-2"><Link href={`StateInitializing`}>State Initializing W/ Object</Link></li>
           <li className="mb-2"><Link href={`TypescriptMistake`}>Typescript &quot;Mistake&quot;</Link></li>
+          <li className="mb-2"><Link href={`CustomHooks`}>Custom Hooks</Link></li>
 
         </ol>
 
