@@ -25,3 +25,18 @@ One other thing ts helps us, is for example, we utilize something as a generic t
 
 useState<{title: string, body: string}>(null), this wouldn't work, because we already told ts what it would be and we're
 passing different values
+
+A better practice to have, it's for creating an interface or type to the object we would pass a type in the state generic
+
+so
+
+Interface Post = {
+  title: string;
+  body: string;
+}
+
+then add like
+
+useState<Post | null>(null)
+
+we should say that i could potentialy be null because we are initializing it as null
