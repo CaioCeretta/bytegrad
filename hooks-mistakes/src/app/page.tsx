@@ -20,6 +20,7 @@ export default function Home() {
           <li className="mb-2"><Link href={`CustomHooks`}>Custom Hooks</Link></li>
           <li className="mb-2"><Link href={`ServerAndClientComp`}>Server And Client Components</Link></li>
           <li className="mb-2"><Link href={`StaleClosure`}>Stale Closures</Link></li>
+          <li className="mb-2"><Link href={`FetchingInUseState`}>Fetching in useState</Link></li>
 
         </ol>
 
