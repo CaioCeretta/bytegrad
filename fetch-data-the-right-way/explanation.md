@@ -245,8 +245,36 @@ Then we will call it with the parameter as follows:
   return createArticleDTO(articleData)
 
 
-this way we are turning that new object with all the properties we want
+this way we are turning that new object with all the properties we want.
 
+It would be a better practice to even create a createArticleDTO instead of creating it on this file. Another benefit of this
+is that if we change our model database, so for example, if we changed the text for content, we won't have to update the DTO
+everywhere in our app, just on the DTO file.
+
+### What is DTO
+
+DTOs are often used to manage the data flow between different parts of the application, such as between components and APIs
+or between state management solutions and UI components.
+
+DTOs are tipically for plain objects or TypeScript interfaces that define the shape of the data. They don't include any
+behavior or methods, just the data fields.
+
+e.g.
+
+interface UserDTO {
+  id: string;
+  name: string;
+  email: string;
+}
+
+. Usage in API Calls: When fetching data from an API the response data can be mapped to a DTO. This makes easier to manage
+and use the data within React Components
+
+const fetchUser = async (userId: string): Promise<UserDTO> => {
+  const response = await fetch(`/api/users/${userId}`);
+  const data = await response.json();
+  return data as UserDTO;
+}
 
 
 
