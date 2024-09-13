@@ -12,6 +12,12 @@ export async function getArticle() {
   }
 
   // database interaction
+  // const articleData = await db.article.findFirst({
+  //   select: {
+  //     text: true,
+  //   }
+  // })
+
   const articleData = await db.article.findFirst()
 
   return articleData
