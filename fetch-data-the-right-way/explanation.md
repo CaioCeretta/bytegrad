@@ -156,6 +156,40 @@ One of the biggest benefits of this pattern, is for refactoring, now we certainl
 coming from, we are never going to be lost trying to find where we left the logic code.
 
 
+## ORM Queries Security Best Practices
+
+In our case, we are using prisma, when we fetch an article, obviously we are not looking for all the articles
+
+if we just to do a prisma.table.findFirst(), it may fetch some sensitive data, but by using select on the query, it ensures
+us that we only get what we desire to fetch, the select property is used to specify which fields of the record we want to
+retrieve.
+
+But let's say that we have only the text and we just call with the findFirst, if we assign it to a variable and return it
+we are going to return plainly like this
+
+const articleData: {
+    text: string;
+} | null
+
+So before we actually return that and make it available to the rest of the app. One last filter step, we can instead
+return and make available a specific object, we know that an aticle data has an id and a text column, and we may want to
+return that id and also the text, so we can create a new object like
+
+return {
+  id: articleData.id,
+  text: articleData.text
+}
+
+In a case where we want the slug, that does not exist on the retrieved object, we can create that property on the returned
+function like this
+
+return {
+  id: articleData.id,
+  text: articleData.text,
+  slug: articleData.text.slice(0, 10)
+}
+
+
 
 
 
