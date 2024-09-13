@@ -189,6 +189,70 @@ return {
   slug: articleData.text.slice(0, 10)
 }
 
+One thing that could also improve the article data file, is to import the "server-only" package
+
+### Differences between use-server and server-only
+
+In Next.js, using 'use server' at the top of a component file explicitly marks the entire component as a server-side com
+ponent. This means the component will only run on the server, not on the client, allowing access to server-side resources
+like databases, file systems, and environment variables directly. These server components don't include any client-side
+JavaScript and are more efficient for rendering static content or server-bound logic. Since they never execute on the
+client, they are ideal for performance-critical features or data that shouldn't be exposed to the client.
+
+On the other hand, importing "server-only" is more restrictive and enforces that specific code can only be run on the
+server, throwing an error if it is mistakenly included in client-side code. This is useful when certain logic, functions,
+or variables should strictly never be exposed to the client (e.g., sensitive data like API keys). It serves as a safeguar
+to ensure that critical server-only logic doesn't leak into client-side rendering. This directive complements 'use server',
+but focuses on specific pieces of code rather than the entire component.
+
+### End Explanation
+
+So the "server-only" that will make sure that if we try to access anything there on the client side, it will then return
+an error, it's slightly safer, because we will not accidentally use it on the client side.
+
+So in summary we can retrieve assign the whole object to a const and return a new object with the fields we want from that
+object, and the fancy word for this is a data transferor object, dto, so instead of doing this
+
+  return {
+    id: articleData?.id,
+    text: articleData?.text,
+    slug: articleData?.text.slice(0, 10)
+
+  }
+
+we could create a separate function like createArticleDTO, which will have all the properties that we want to return to 
+the user, such as id, text and slug, like
+
+type ArticleDataDTO = {
+  id: string,
+  text: string,
+  slug: string
+}
+
+const createArticleDTO = (articleData: {id: string; text: string}): ArticleDataDTO => {
+  return {
+    id: articleData.id,
+    text: articleData.text,
+    slug: articleData.text.slice(0, 10)
+  }
+}
+
+we are doing this way, because the articleData we are passing as argument to this function does not have the slug property
+so we are saying to ts that this is returning an object of that specific type, where we will have the slug included.
+
+Then we will call it with the parameter as follows:
+
+  return createArticleDTO(articleData)
+
+
+this way we are turning that new object with all the properties we want
+
+
+
+
+
+ 
+
 
 
 
