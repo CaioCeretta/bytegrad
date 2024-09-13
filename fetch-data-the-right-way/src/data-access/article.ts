@@ -1,6 +1,22 @@
+
+
 import { db } from "@/db";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { redirect } from "next/navigation";
+
+type ArticleDataDTO = {
+  id: string,
+  text: string,
+  slug: string
+}
+
+const createArticleDTO = (articleData: {id: string; text: string}): ArticleDataDTO => {
+  return {
+    id: articleData.id,
+    text: articleData.text,
+    slug: articleData.text.slice(0, 10)
+  }
+}
 
 export async function getArticle() {
 
@@ -20,7 +36,11 @@ export async function getArticle() {
 
   const articleData = await db.article.findFirst()
 
-  return articleData
+  if(!articleData) {
+    throw new Error('Article not found')
+  }
+
+  return createArticleDTO(articleData)
 }
 
 export async function updateArticle() {
