@@ -1,0 +1,22 @@
+
+# Specify the docker compose file syntax you're using, version 3 is the most common and stable onde
+version: '3'
+# Services defines the various containers will be run, in this case, only the postgres
+services:
+  postgres:
+    # Specifies the docker image to be used in this server, in this case, we are using the official image from the Docker Hub
+    image: postgres
+    # Configure POSTGRESQL when the container starts
+    environment:
+      POSTGRES_USER: bytegrad
+      POSTGRES_PASSWORD: bytegrad
+      POSTGRES_DB: bytegrad
+    # This tells the first port meaning our computer host and the second port being the container port
+    ports:
+      - "5432:5432"
+    # Volumes are used for data persistence, here we are creating a named volume pgdata and mounting it to /var/lib/postgresql/data
+    # inside the container, this ensures that the postgres data persists even if the container is stopped or deleted
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+volumes:
+  pgdata:
