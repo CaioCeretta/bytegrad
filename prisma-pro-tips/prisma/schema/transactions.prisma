@@ -1,0 +1,7 @@
+model Transaction {
+  id        Int      @id @default(autoincrement())
+  amount    Float
+  createdAt DateTime @default(now())
+  expense   Expense  @relation(fields: [expenseId], references: [id])
+  expenseId Int
+}

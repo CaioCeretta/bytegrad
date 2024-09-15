@@ -1,0 +1,7 @@
+model Expense {
+  id          Int           @id @default(autoincrement())
+  description String
+  amount      Float
+  createdBy   String
+  Transaction Transaction[]
+}
