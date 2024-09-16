@@ -1,4 +1,3 @@
-Lessons
 
 # 1 Multiple Schema Files
 

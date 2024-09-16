@@ -1,10 +1,14 @@
 import {PrismaClient} from '@prisma/client'
 
 const prismaClientSingleton = () => {
-  return new PrismaClient({
-    omit: {
+  return new PrismaClient().$extends({
+    result: {
       expense: {
-        createdBy: true
+        slug: {
+          compute() {
+            return 'some string'
+          }
+        }
       }
     }
   })
