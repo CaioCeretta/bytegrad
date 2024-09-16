@@ -1,8 +1,8 @@
-import { db } from "@/db";
+import prisma from "@/db";
 
 export default async function Home() {
 
-  const expenses = await db.expense.findMany()
+  const expenses = await prisma.expense.findMany()
 
   return (
     <main className="flex flex-col justify-center items-center pt-24">
