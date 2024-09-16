@@ -3,7 +3,7 @@ import prisma from "@/db";
 export default async function Home() {
 
   const expenses = await prisma.expense.findMany({
-    relation: 
+    relation: "query"
   })
 
   return (
