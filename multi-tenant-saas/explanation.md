@@ -66,5 +66,63 @@ also single tenancy.
   is making that request so we can retrieve the data from the database that belongs only to that tenant, we do not want
   our customers to be e-mailing us about why they can see other people data.
 
-  So in a setup like this, to ensure the data is properly isolated
+  So in a setup like this, to ensure the data is properly isolated, we are going to aas follows
+
+  If we have one database for all clients, essentially one schema for everyone, what we are going to have is, let's say
+  to a table, in it we have a bunch of data; entries; rows, let's use a sql database for this example. we can simply have
+  a column for the tenant id, so if we are getting an incoming request from tenant id 5, then we know that when we interact
+  with our database, we need to have a filter so that we only retrieve the rows where tenant id is 5.
+
+  ## Example Nº 1
+
+  Here we are listing all the expenses from the tenant with the id 5, so it would be
+
+  const expenses = await prisma.expenses.findMany({
+    where: {
+      tenantId: 5
+    }
+  })
+
+  but if we use it without the where it would show us all the expenses
+
+  So remember, this tenant should not get access to all the data.
+
+  And how we know the tenant id? This comes from the authentication solution, let's say we are using kinde, and we are in
+  a b2b app, the tenant is going to be a company or an organization, so the tenant id is going to be the organization id
+  we are able to retrieve that with the function getOrganization which we destructure from getKindeServerSession function,
+  and finally, we call that function and store the id it into an organization variable
+
+  const { getOrganization } = getKindeServerSession();
+  const organization = await getOrganization()
+
+  This is probably the easisest approach and the easiest way to get started
+
+## Example Nº 2
+
+If we still want to keep one database but we want a little bit more of isolation between each tenants data, we can also
+set up a schema per tenant, so if we are a little bit more familiar with databases, or if we are building an app that
+there are more stringent data isolation requirements, such as health care, banking, or some other really regulated type
+of applicaiton, and so we don't want to take any risks, this other kind of approach would be better 
+
+so is a set up where all the tenants still access the same app and db, but the db layer, there will be solution for iso
+lating that further set up.
+
+## Example Nº 3
+
+It is possible that we want to keep separate databases for each tenant, we can do it, but it comes with additional comple
+xities, and it may be worthwhile if our specific app really needs that, specially in highly regulated enterprises.
+
+## Example of the video
+
+Let's say for the purpose of this video, we do want to keep one database and we're just going to have one schema for all
+the data.
+
+So a b2b expense management, would work as follows:
+
+So let's say we have a b2b expense management SaaS, and we have three expenses in our db, one for each tenant and we need
+to keep track of which one created the expense.
+
+For this, we will need an authentication, because right now, 
+
+
 
