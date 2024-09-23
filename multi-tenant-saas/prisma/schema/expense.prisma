@@ -2,5 +2,5 @@ model Expense {
   id          Int    @id @default(autoincrement())
   description String
   amount      Float
-  tenantId    Int
+  tenantId    String
 }

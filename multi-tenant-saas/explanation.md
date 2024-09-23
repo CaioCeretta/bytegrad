@@ -122,7 +122,32 @@ So a b2b expense management, would work as follows:
 So let's say we have a b2b expense management SaaS, and we have three expenses in our db, one for each tenant and we need
 to keep track of which one created the expense.
 
-For this, we will need an authentication, because right now, 
+In kinde, we registered both the users and create organization, placing a user in each organization
+
+One of the ways for us to do that is by getting the getOrganization function from the function getKindeServerSession()
+and assign the result of this getOrganization, which is going to the get the curent user organization, to a variable, and
+utilize that organization on a where caluse of the findMany.
+
+A good place to keep this database communication organized is by creating a folder in the src, named data-access, and inside
+of it, many ts files of each schemas. Here we are using to get the expenses based on an organization id
+
+One other thing, is that on kinde page, we can alter the roles and permissions of the admin.
+
+So by going on the settings, we are going to be able to access the permissions of the admin user, and the idea here is that
+we have permissions, which are the most granular unit of authorization.
+
+So for example, here we are creating a permission that says that the user is able to view the expenses, other for creating
+and so on.
+
+And we can assign multiple of them by creating a role, such as
+
+Manager Role, which can do everything with an expense, then we can assign to that role, the permissions we've just created.
+
+Basic User Role, only can view expenses and all new users are going to be assigned to that role. 
+
+Then, it will still not do anything, so we will get the function from kinde `getPermission`, then, we'll get if in the user
+permissions it includes what we named it, in this case, view:expenses, if the user does not have that permission, he will
+be redirected to an unauthorized page. 
 
 
 
