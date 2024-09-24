@@ -8,9 +8,16 @@ const ThemeToggler = () => {
   const [darkMode, setDarkMode] = useState<boolean>(true)
 
   useEffect(() => {
-    const theme = localStorage.getItem('theme')
+    // Detect theme preference from localStorage or system
+    const storedTheme = localStorage.getItem('theme')
 
-    if (theme === 'dark') setDarkMode(true)
+    if (storedTheme) {
+      setDarkMode(storedTheme === 'dark')
+    } else {
+      //Auto-detect system theme if no theme is set in localStorage
+      const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      setDarkMode(systemPrefersDark)
+    }
 
   }, [])
 
@@ -18,7 +25,7 @@ const ThemeToggler = () => {
     if (darkMode) {
       document.documentElement.classList.add('dark');
       document.documentElement.classList.remove('light');
-      
+
       localStorage.setItem('theme', 'dark')
     } else {
       document.documentElement.classList.add('light');
@@ -28,7 +35,7 @@ const ThemeToggler = () => {
 
   }, [darkMode])
 
-  
+
 
   return (
     <div className='relative w-16 h-8 flex items-center dark:bg-gray-900
@@ -42,7 +49,7 @@ const ThemeToggler = () => {
         style={darkMode ? { left: '2px' } : { right: '2px' }}
       />
 
-      <BsSunFill className="ml-auto text-yellow-400" size={18}/>
+      <BsSunFill className="ml-auto text-yellow-400" size={18} />
 
 
     </div>
