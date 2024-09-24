@@ -1,0 +1,3 @@
+model SchemaExample {
+  id String @id @default(cuid())
+}
