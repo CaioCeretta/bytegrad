@@ -162,9 +162,141 @@ One downside of using a server action in a client component, is that we lose a l
 but in the real world we want that client side validation, that form reset, etc, in the vast majority of
 the cases we are going to have a server function been invoked on the client.
 
+## Form Status
+
 **Pending State**
 
-TO add a pending state while it is being submitted, we have another hook, and for this to actually work, we do need to 
+To add a pending state while it is being submitted, we have another hook, and for this to actually work, we do need to
+make a separate client component for the button, where the form is going to be an ancestor, so to speak.
+
+Now by pasting the exact same code and importing it into the form, it will work normally.
+
+Now this button is its own component and the hook we can use is formStatus from react dom
+
+const {pending} = useFormStatus(), we can destructure the return of the useFormStatus, it has an action that will show us
+the function that is connected to this form, some data, the method of the form and the pending state.
+
+Now it will show us that the form is being submitted based on that pending.
+
+so by adding to the Button, inside the tags, per example
+
+{
+  pending ? 'Adding todo...' : 'Add'
+}
+
+now when we submit this form, it will show this message while it's being submitted.
+
+**Error handling**
+
+One other important thing is to add error handling, what if this database call, in
+our server action, fails?
+
+It is running on the server, so to make sure that if something goes wrong, we can
+output some message to the user, we can simply wrap the code in a try catch block, e.g.
+
+try {
+
+    await prisma.todo.create({
+      data: {
+        content: content as string,
+      }
+    })
+  } catch(e) {
+    return {
+      error: e
+    }
+  }
+
+  now if something goes wrong, we are returning an object with a property error
+  which holds the error that occurred, and now in the form, where we call the action
+
+  we can destructure the call to something like
+
+ const { error } = await addTodo(formData);
+
+  if(error) {
+    alert(error.message)
+  }
+
+  now if there is an error, we are immediately getting it back.
+
+
+## End of Form Status
+
+*useOptimistic*
+
+Optimistic UI is a pattern used to improve user experience by updating the UI immediately, without waiting for the backend
+confirmation. The ideia is that most of the time, the request will succeed, so we optimistically update the UI. if something
+goes wrong, we revert the changes.
+
+So as a recap, we still have the page, the page is still fetching the data and displaying to the user, but now it's more
+refactored.
+
+useOptimistic is a hook that helps manage optimistic updates. It takes two arguments:
+
+1. Initial state: (in this case, our todos list)
+2. A function (reducer-like) that receives the current state and the new data we want to optimistically add, in this case,
+the new todo. The function defines how the state should be updated.
+
+When we call this hook it returns the optimistic state, which is the UI state that we should display, like the list of todos
+with the new optimistic addition and the function to add data to the optimistic state before making the actual API call.
+
+const [optimisticTodos, addOptimisticTodo] =
+   useOptimistic(todos, (state, newTodo) => {
+    return [...state, newTodo]
+  })
+
+And what we get here are two things, as the first array item, we get the todos optimistic and also a function to add an
+optimistic .
+
+Now instead of using the todos, we use the optimisticTodos, so we iterate over it and on the action, before we add it to
+the database, before we have to wait that two or three seconds, we can optimistically add it here, and to the function of
+addOptimisticTodo which is being returned, we can call it before the addTodo.
+
+Now if we save here, and now we try adding something, it immediately gets added to the list.
+
+Key Points to Understand
+
+.Immediate UI Update: addOptimisticTodo is called first to update the UI without delay.
+
+.API Call in the Background: The real request (addTodo) is made in the background. Most of the time, it succeeds, so the
+optimistic update stays.
+
+.Fallback (if needed): If the request fails, you should reset or revert the optimistic state to its previous value.
+
+
+Example of it going wrong: 
+
+We are optimistic now, but what happens if something goes wrong on the server? and one of the benefits of creating the
+optimistic pattern in conjunction with server actions.
+
+If we go to the server actions now, and we think that this will work allright, but in the action something went wrong, in
+the UI this still going to be shown. We need to be sure that when it fails, it is removed again from the UI.
+
+we will see that if, for example, we change to something like content2: content, content2 does not exist on prisma, so it
+will barely show the optimistical add to the list, but in less than a second it will
+revert it back to how it was.
+
+Server actions are pretty powerful because not only we don't have to create these API routes, but we also get these hooks,
+such as the useOptimistic, FormStatus for pending state.
+
+## formAction attribute
+
+We've learned that we can utilize the form action, but also do this with some other element in the form, so we can also use
+form actions, not action={action} but on an input add something like  formAction={action}
+
+in this example we have a <input type="image" formAction={submitImage} />
+
+This is particularly useful if we want to have different server actions for different inputs, or if we have two buttons and
+we want to have one server action for one button and another one for the other, because a formAction will run the code that 
+is assigned to it, whenever the element is clicked.
+
+
+
+
+
+
+
 
 
 

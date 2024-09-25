@@ -1,5 +1,5 @@
-import Form from '@/components/Form';
 import { MaxWidthWrapper } from '@/components/MaxWidthWrapper';
+import TodosComponent from '@/components/TodosComponent';
 import prisma from '@/lib/db';
 
 export default async function TodosPage() {
@@ -12,13 +12,9 @@ export default async function TodosPage() {
       w-full p-24'>
         <h1 className="text-3xl font-bold">Todos Page</h1>
     
-        <Form  />
+        <TodosComponent todos={todos}/>
 
-        <ul className="list-disc">
-          {todos.map(todo => (
-            <li key={todo.id}>{todo.content}</li>
-          ))}
-        </ul>
+      
       </main>
     </MaxWidthWrapper>
   )
