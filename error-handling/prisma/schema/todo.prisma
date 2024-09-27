@@ -1,0 +1,4 @@
+model Todo {
+  id      String @id @default(cuid())
+  content String
+}
