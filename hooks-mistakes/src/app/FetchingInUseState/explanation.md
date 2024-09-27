@@ -35,7 +35,7 @@ So far so good, then we now have
 
 <PostBody id={id} />
 
-If we do it like this, the component will re-render when the button is clicked, because the id is being clicked so the useEffect
+If we do it like this, the component will re-render when the button is clicked, because the id is being changed so the useEffect
 will run both when the component is mounted but also the id changes, now when we click there, we will see everytime a
 new post, so far so good.
 
